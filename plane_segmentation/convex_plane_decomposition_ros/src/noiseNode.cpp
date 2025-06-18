@@ -10,6 +10,10 @@
 #include <grid_map_filters_rsl/inpainting.hpp>
 #include <grid_map_filters_rsl/smoothing.hpp>
 
+#ifndef M_PIf32
+#define M_PIf32 3.14159265358979323846f
+#endif
+
 double noiseUniform;
 double noiseGauss;
 double outlierPercentage;
