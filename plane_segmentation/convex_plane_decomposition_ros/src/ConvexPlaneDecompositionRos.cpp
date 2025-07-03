@@ -152,7 +152,7 @@ void ConvexPlaneExtractionROS::callback(const grid_map_msgs::GridMap& message) {
   grid_map::GridMapRosConverter::toMessage(planarTerrain.gridMap, outputMessage);
   filteredmapPublisher_.publish(outputMessage);
 
-  const double lineWidth = 0.005;  // [m] RViz marker size
+  const double lineWidth = 0.025;  // [m] RViz marker size
   boundaryPublisher_.publish(convertBoundariesToRosMarkers(planarTerrain.planarRegions, planarTerrain.gridMap.getFrameId(),
                                                            planarTerrain.gridMap.getTimestamp(), lineWidth));
   insetPublisher_.publish(convertInsetsToRosMarkers(planarTerrain.planarRegions, planarTerrain.gridMap.getFrameId(),
