@@ -9,10 +9,10 @@ import numpy as np
 import threading
 import subprocess
 
-from elevation_mapping_cupy.traversability_filter import (
-    get_filter_chainer,
-    get_filter_torch,
-)
+# from elevation_mapping_cupy.traversability_filter import (
+#     get_filter_chainer,
+#     get_filter_torch,
+# )
 from elevation_mapping_cupy.parameter import Parameter
 
 from elevation_mapping_cupy.kernels import (
@@ -103,10 +103,10 @@ class ElevationMap:
         weight_file = subprocess.getoutput('echo "' + param.weight_file + '"')
         param.load_weights(weight_file)
 
-        if param.use_chainer:
-            self.traversability_filter = get_filter_chainer(param.w1, param.w2, param.w3, param.w_out)
-        else:
-            self.traversability_filter = get_filter_torch(param.w1, param.w2, param.w3, param.w_out)
+        # if param.use_chainer:
+        #     self.traversability_filter = get_filter_chainer(param.w1, param.w2, param.w3, param.w_out)
+        # else:
+        #     self.traversability_filter = get_filter_torch(param.w1, param.w2, param.w3, param.w_out)
         self.untraversable_polygon = xp.zeros((1, 2))
 
         # Plugins
@@ -382,10 +382,10 @@ class ElevationMap:
                 size=(self.cell_n * self.cell_n),
             )
             # calculate traversability
-            traversability = self.traversability_filter(self.traversability_input)
-            self.elevation_map[3][3:-3, 3:-3] = traversability.reshape(
-                (traversability.shape[2], traversability.shape[3])
-            )
+            # traversability = self.traversability_filter(self.traversability_input)
+            # self.elevation_map[3][3:-3, 3:-3] = traversability.reshape(
+            #     (traversability.shape[2], traversability.shape[3])
+            # )
 
         # calculate normal vectors
         self.update_normal(self.traversability_input)
