@@ -138,7 +138,12 @@ ElevationMappingNode::ElevationMappingNode(ros::NodeHandle& nh)
         else {
           channels_[key].push_back("rgb");
         }
-        ROS_INFO_STREAM("Subscribed to Image topic: " << camera_topic << ", Camera info topic: " << info_topic << ". Channel info topic: " << (channel_info_topic.empty() ? ("Not found. Using channels: " + boost::algorithm::join(channels_[key], ", ")) : channel_info_topic));
+        
+        for (const auto& channel : channels_[key]) {
+          ROS_INFO_STREAM("Subscribed to Image topic: " << camera_topic << ", Camera info topic: " << info_topic 
+                          << ". Channel info topic: " 
+                          << (channel_info_topic.empty() ? ("Not found. Using channel: " + channel) : channel_info_topic));
+        }
         CameraSyncPtr sync = std::make_shared<CameraSync>(CameraPolicy(10), *image_sub, *cam_info_sub);
         sync->registerCallback(boost::bind(&ElevationMappingNode::imageCallback, this, _1, _2, key));
         cameraSyncs_.push_back(sync);
@@ -436,7 +441,9 @@ void ElevationMappingNode::inputImage(const sensor_msgs::ImageConstPtr& image_ms
   }
   if (total_channels != multichannel_image.size()) {
     ROS_ERROR("Mismatch in the size of multichannel_image (%d), channels (%d). Please check the input.", multichannel_image.size(), channels.size());
-    ROS_ERROR_STREAM("Current Channels: " << boost::algorithm::join(channels, ", "));
+    for (const auto& channel : channels) {
+      ROS_ERROR_STREAM("Current Channel: " << channel);
+    }
     return;
   }
 
