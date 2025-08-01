@@ -34,4 +34,4 @@ inpainting:
   is_height_layer: True
   layer_name: "inpaint"
   extra_params:
-    method: "telea"                           # telea or ns
+    method: "ns"                           # telea or ns
