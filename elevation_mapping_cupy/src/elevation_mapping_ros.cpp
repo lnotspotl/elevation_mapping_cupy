@@ -70,6 +70,11 @@ ElevationMappingNode::ElevationMappingNode(ros::NodeHandle& nh)
   nh.param<bool>("use_initializer_at_start", useInitializerAtStart_, false);
   nh.param<bool>("always_clear_with_initializer", alwaysClearWithInitializer_, false);
 
+  // Wait for other nodes to start
+  double elevationMappingInitialDelay;
+  nh.param<double>("elevation_mapping_initial_delay", elevationMappingInitialDelay, 0);
+  std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(elevationMappingInitialDelay * 1000)));
+
   enablePointCloudPublishing_ = enablePointCloudPublishing;
 
   // Iterate all the subscribers
